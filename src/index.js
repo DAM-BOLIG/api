@@ -1,10 +1,10 @@
-const Mysqlpool = require('./src/db/dbConnection.js');
-const assetdb = require('./src/db/assetDB.js')(Mysqlpool);
+const Mysqlpool = require('./db/dbConnection.js');
+const assetdb = require('./db/assetDB.js')(Mysqlpool);
 const express = require('express');
 const app = express();
-const damservice = require('./src/service/damservice.js')(assetdb);
+const damservice = require('./service/damservice.js')(assetdb);
 
-const routes = require('./src/api/routes.js')(
+const routes = require('./api/routes.js')(
    express.Router(),
    damservice
 )
