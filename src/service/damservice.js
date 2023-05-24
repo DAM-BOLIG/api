@@ -8,6 +8,7 @@ module.exports = (InjectedAssetDB) => {
   return {
     createAsset,
     getAsset,
+    deleteAsset,
   };
 };
 
@@ -41,3 +42,5 @@ function sendResponse(res, message, error) {
     error: error,
   });
 }
+
+function deleteAsset(req, res) {}

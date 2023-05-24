@@ -4,5 +4,6 @@ module.exports = (router, damservice) => {
   /*var body = req.body;
         res.send(body);*/
   router.get("/allasset", damservice.getAsset);
+  router.delete("/deleteasset", damservice.deleteAsset);
   return router;
 };
