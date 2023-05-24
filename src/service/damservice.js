@@ -19,18 +19,18 @@ function createAsset(req, res) {
     (response) => {
       sendResponse(
         res,
-        response.error === undefined ? "Succes!!" : "something, went wrong",
+        response.error === null ? "Succes!!" : "something, went wrong",
         response.error
       );
     }
   );
 }
 
-function getAsset(res) {
+function getAsset(req, res) {
   assetDB.getAsset((response) => {
     sendResponse(
       res,
-      response.error === undefined ? "Results" : "Error occured",
+      response.results.length === null ? "No Results" : response.results,
       response.error
     );
   });
