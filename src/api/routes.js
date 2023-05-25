@@ -5,5 +5,6 @@ module.exports = (router, damservice) => {
         res.send(body);*/
   router.get("/allasset", damservice.getAsset);
   router.delete("/deleteasset/:AssetID", damservice.deleteAsset);
+  router.put("/updateasset/:AssetID", damservice.putAsset);
   return router;
 };

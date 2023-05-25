@@ -9,6 +9,7 @@ module.exports = (InjectedAssetDB) => {
     createAsset,
     getAsset,
     deleteAsset,
+    putAsset,
   };
 };
 
@@ -42,6 +43,16 @@ function deleteAsset(req, res) {
     sendResponse(
       res,
       response.error === null ? "Record Deleted" : "Something Went Wrong",
+      response.error
+    );
+  });
+}
+
+function putAsset(req, res) {
+  assetDB.putAsset(req.params.AssetID, (response) => {
+    sendResponse(
+      res,
+      response.error === null ? "Record Updated" : "Something Went Wrong",
       response.error
     );
   });

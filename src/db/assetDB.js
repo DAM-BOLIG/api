@@ -9,6 +9,7 @@ module.exports = (InjectedMysqlPool) => {
     createAsset,
     getAsset,
     deleteAsset,
+    putAsset,
   };
 };
 
@@ -35,6 +36,12 @@ function getAsset(cbFunc) {
 function deleteAsset(AssetID, cbFunc) {
   const sql = "DELETE FROM asset WHERE AssetID = " + AssetID + "";
 
+  Mysqlpool.query(sql, cbFunc);
+}
+
+function putAsset(AssetID, cbFunc) {
+  const sql =
+    "UPDATE asset SET StyleName = 'test' WHERE AssetID = " + AssetID + "";
   Mysqlpool.query(sql, cbFunc);
 }
 
