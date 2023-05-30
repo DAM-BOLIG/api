@@ -9,6 +9,7 @@ module.exports = (InjectedAssetDB) => {
     createAsset,
     getAsset,
     deleteAsset,
+    putAsset,
   };
 };
 
@@ -36,11 +37,30 @@ function getAsset(req, res) {
     );
   });
 }
+
+function deleteAsset(req, res) {
+  assetDB.deleteAsset(req.params.StyleNumber, (response) => {
+    sendResponse(
+      res,
+      response.error === null ? "Record Deleted" : "Something Went Wrong",
+      response.error
+    );
+  });
+}
+
+function putAsset(req, res) {
+  assetDB.putAsset(req.body.StyleName, req.params.StyleNumber, (response) => {
+    sendResponse(
+      res,
+      response.error === null ? "Record Updated" : "Something Went Wrong",
+      response.error
+    );
+  });
+}
+
 function sendResponse(res, message, error) {
   res.status(error !== undefined ? 400 : 200).json({
     message: message,
     error: error,
   });
 }
-
-function deleteAsset(req, res) {}

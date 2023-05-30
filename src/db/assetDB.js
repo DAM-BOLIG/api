@@ -8,6 +8,8 @@ module.exports = (InjectedMysqlPool) => {
   return {
     createAsset,
     getAsset,
+    deleteAsset,
+    putAsset,
   };
 };
 
@@ -28,6 +30,17 @@ function createAsset(stylename, stylenumber, styleoptionnumber, cbFunc) {
 function getAsset(cbFunc) {
   const sql = "SELECT * FROM asset ORDER BY AssetID DESC";
 
+  Mysqlpool.query(sql, cbFunc);
+}
+
+function deleteAsset(StyleNumber, cbFunc) {
+  const sql = "DELETE FROM asset WHERE StyleNumber = " + StyleNumber + "";
+
+  Mysqlpool.query(sql, cbFunc);
+}
+
+function putAsset(stylename, stylenumber, cbFunc) {
+  const sql = `UPDATE asset SET StyleName = '${stylename}' WHERE StyleNumber = '${stylenumber}'`;
   Mysqlpool.query(sql, cbFunc);
 }
 
