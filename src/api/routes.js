@@ -10,5 +10,8 @@ module.exports = (router, damservice) => {
   router.get("/allcategory", damservice.getCategory);
   router.delete("/deletecategory/:CategoryID", damservice.deleteCategory);
   router.put("/updatecategory/:CategoryID", damservice.putCategory);
+  /*  Brand requests: GET   */
+  /*  Color requests: GET  */
+  /* User requests: POST */
   return router;
 };

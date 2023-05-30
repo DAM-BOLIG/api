@@ -50,8 +50,8 @@ function deleteAsset(req, res) {
   assetDB.deleteAsset(req.params.StyleNumber, (response) => {
     sendResponse(
       res,
-      response.error === null ? "Record Deleted" : "Something Went Wrong"
-      //response.error
+      response.error === null ? "Record Deleted" : "Something Went Wrong",
+      response.error
     );
   });
 }
