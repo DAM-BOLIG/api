@@ -10,19 +10,16 @@ module.exports = (InjectedMysqlPool) => {
     getAsset,
     deleteAsset,
     putAsset,
+    getCategory,
+    createCategory,
+    deleteCategory,
+    putCategory,
   };
 };
 
+/* Asset requests  */
+
 function createAsset(stylename, stylenumber, styleoptionnumber, cbFunc) {
-  //const reqBody = req.body
-
-  /*
-    const stylename = reqBody.StyleName;
-    const stylenumber = reqBody.StyleNumber;
-    const styleoptionnumber = reqBody.StyleOptionNumber;
-    const created = reqBody.Created;
-    */
-
   const sql = `INSERT INTO asset (StyleName, StyleNumber, StyleOptionNumber)VALUES('${stylename}', '${stylenumber}', '${styleoptionnumber}')`;
   Mysqlpool.query(sql, cbFunc);
 }
@@ -44,23 +41,26 @@ function putAsset(stylename, stylenumber, cbFunc) {
   Mysqlpool.query(sql, cbFunc);
 }
 
-/*function getAsset(req, res, cbFunc) {
-  const sql =
-    ("SELECT * FROM asset ORDER BY AssetID DESC",
-    function (err, result, fields) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
-  Mysqlpool.query(sql, cbFunc);
-}*/
+/* Category requests  */
 
-/*function getAsset(cbFunc) {
-  const sql = "SELECT * FROM asset ORDER BY AssetID DESC";
-  Mysqlpool.query(sql, response=>{
-    cbFunc(false, response.results)
-    return(results)
-  });
-}*/
+function getCategory(cbFunc) {
+  const sql = "SELECT * FROM category ORDER BY CategoryID DESC";
+
+  Mysqlpool.query(sql, cbFunc);
+}
+
+function createCategory(Name, cbFunc) {
+  const sql = `Insert INTO category (Name)VALUES('${Name}')`;
+  Mysqlpool.query(sql, cbFunc);
+}
+
+function deleteCategory(CategoryID, cbFunc) {
+  const sql = "DELETE FROM category WHERE CategoryID = " + CategoryID + "";
+
+  Mysqlpool.query(sql, cbFunc);
+}
+
+function putCategory(CategoryName, CategoryID, cbFunc) {
+  const sql = `UPDATE category SET Name = '${CategoryName}' WHERE CategoryID = '${CategoryID}'`;
+  Mysqlpool.query(sql, cbFunc);
+}
