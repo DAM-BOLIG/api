@@ -39,7 +39,7 @@ function getAsset(req, res) {
 }
 
 function deleteAsset(req, res) {
-  assetDB.deleteAsset(req.params.AssetID, (response) => {
+  assetDB.deleteAsset(req.params.StyleNumber, (response) => {
     sendResponse(
       res,
       response.error === null ? "Record Deleted" : "Something Went Wrong",
@@ -49,7 +49,7 @@ function deleteAsset(req, res) {
 }
 
 function putAsset(req, res) {
-  assetDB.putAsset(req.params.AssetID, (response) => {
+  assetDB.putAsset(req.body.StyleName, req.params.StyleNumber, (response) => {
     sendResponse(
       res,
       response.error === null ? "Record Updated" : "Something Went Wrong",

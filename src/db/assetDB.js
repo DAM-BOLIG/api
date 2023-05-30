@@ -33,15 +33,14 @@ function getAsset(cbFunc) {
   Mysqlpool.query(sql, cbFunc);
 }
 
-function deleteAsset(AssetID, cbFunc) {
-  const sql = "DELETE FROM asset WHERE AssetID = " + AssetID + "";
+function deleteAsset(StyleNumber, cbFunc) {
+  const sql = "DELETE FROM asset WHERE StyleNumber = " + StyleNumber + "";
 
   Mysqlpool.query(sql, cbFunc);
 }
 
-function putAsset(AssetID, cbFunc) {
-  const sql =
-    "UPDATE asset SET StyleName = 'test' WHERE AssetID = " + AssetID + "";
+function putAsset(stylename, stylenumber, cbFunc) {
+  const sql = `UPDATE asset SET StyleName = '${stylename}' WHERE StyleNumber = '${stylenumber}'`;
   Mysqlpool.query(sql, cbFunc);
 }
 
