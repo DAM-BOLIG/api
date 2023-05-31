@@ -14,6 +14,8 @@ module.exports = (InjectedMysqlPool) => {
     createCategory,
     deleteCategory,
     putCategory,
+    getBrand,
+    getColor,
   };
 };
 
@@ -62,5 +64,20 @@ function deleteCategory(CategoryID, cbFunc) {
 
 function putCategory(CategoryName, CategoryID, cbFunc) {
   const sql = `UPDATE category SET Name = '${CategoryName}' WHERE CategoryID = '${CategoryID}'`;
+  Mysqlpool.query(sql, cbFunc);
+}
+
+/* Brand requests  */
+function getBrand(cbFunc) {
+  const sql = "SELECT * FROM brand ORDER BY BrandID DESC";
+
+  Mysqlpool.query(sql, cbFunc);
+}
+
+/* Color requests  */
+
+function getColor(cbFunc) {
+  const sql = "SELECT * FROM color ORDER BY ColorID DESC";
+
   Mysqlpool.query(sql, cbFunc);
 }
