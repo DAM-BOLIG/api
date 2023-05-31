@@ -18,7 +18,7 @@ module.exports = (InjectedAssetDB) => {
     putCategory,
     getBrand,
     getColor,
-    createUser,
+    //createUser,
   };
 };
 
@@ -29,6 +29,8 @@ function createAsset(req, res) {
     req.body.StyleName,
     req.body.StyleNumber,
     req.body.StyleOptionNumber,
+    req.body.CategoryID,
+    req.body.BrandID,
     (response) => {
       sendResponse(
         res,
