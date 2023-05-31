@@ -28,9 +28,12 @@ function createAsset(req, res) {
   assetDB.createAsset(
     req.body.StyleName,
     req.body.StyleNumber,
-    req.body.StyleOptionNumber,
     req.body.CategoryID,
     req.body.BrandID,
+    req.body.ColorID,
+    req.body.Primary_IMG,
+    req.body.Secondary_IMG,
+    req.body.Optional_IMG,
     (response) => {
       sendResponse(
         res,

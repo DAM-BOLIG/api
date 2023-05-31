@@ -22,14 +22,17 @@ module.exports = (InjectedMysqlPool) => {
 /* Asset requests  */
 
 function createAsset(
-  stylename,
-  stylenumber,
-  styleoptionnumber,
-  categoryid,
-  brandid,
+  StyleName,
+  StyleNumber,
+  CategoryID,
+  BrandID,
+  ColorID,
+  Primary_IMG,
+  Secondary_IMG,
+  Optional_IMG,
   cbFunc
 ) {
-  const sql = `Insert INTO asset (StyleName, StyleNumber, StyleOptionNumber, CategoryID, BrandID)VALUES('${stylename}', '${stylenumber}', '${styleoptionnumber}', '${categoryid}', '${brandid}')`;
+  const sql = `Insert INTO asset (StyleName, StyleNumber, CategoryID, BrandID, ColorID, Primary_IMG, Secondary_IMG, Optional_IMG)VALUES('${StyleName}', '${StyleNumber}', '${CategoryID}', '${BrandID}', '${ColorID}', '${Primary_IMG}', '${Secondary_IMG}', '${Optional_IMG}')`;
   Mysqlpool.query(sql, cbFunc);
 }
 
