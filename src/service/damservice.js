@@ -1,5 +1,6 @@
 const { response } = require("express");
-
+const env = require("dotenv").config();
+const jtw = require("jsonwebtoken");
 let assetDB;
 
 module.exports = (InjectedAssetDB) => {
@@ -18,6 +19,7 @@ module.exports = (InjectedAssetDB) => {
     putCategory,
     getBrand,
     getColor,
+    authToken,
     //createUser,
   };
 };
@@ -152,6 +154,16 @@ function getColor(req, res) {
   });
 }
 */
+
+function authToken(req, res) {
+  assetDB.authToken((response) => {
+    sendResponse(
+      res,
+      response.results.length === null ? "No Results" : response.results,
+      response.error
+    );
+  });
+}
 
 /* Response function  */
 function sendResponse(res, message, error) {

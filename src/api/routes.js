@@ -1,5 +1,5 @@
 //const { Router, response } = require('express');
-module.exports = (router, damservice) => {
+module.exports = (router, damservice, auth) => {
   /* Asset requests  */
   router.post("/newasset", damservice.createAsset);
   router.get("/allasset", damservice.getAsset);
@@ -16,5 +16,6 @@ module.exports = (router, damservice) => {
   router.get("/allcolor", damservice.getColor);
   /* User requests: POST */
   //router.post("/newuser", damservice.createUser);
+  router.post("/authtoken", auth.authToken);
   return router;
 };
