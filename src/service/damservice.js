@@ -9,10 +9,11 @@ module.exports = (InjectedAssetDB) => {
   return {
     /* Asset requests  */
     createAsset,
+    assetInfo,
     getAsset,
+    getAssetByID,
     deleteAsset,
     putAsset,
-    /* Category requests  */
     getCategory,
     createCategory,
     deleteCategory,
@@ -29,13 +30,15 @@ module.exports = (InjectedAssetDB) => {
 function createAsset(req, res) {
   assetDB.createAsset(
     req.body.StyleName,
-    req.body.StyleNumber,
+    req.body.Width,
+    req.body.Height,
+    req.body.Length,
+    req.body.Description,
+    /*req.body.Created,*/
     req.body.CategoryID,
     req.body.BrandID,
     req.body.ColorID,
     req.body.Primary_IMG,
-    req.body.Secondary_IMG,
-    req.body.Optional_IMG,
     (response) => {
       sendResponse(
         res,
@@ -44,6 +47,16 @@ function createAsset(req, res) {
       );
     }
   );
+}
+
+function assetInfo(req, res) {
+  assetDB.assetInfo((response) => {
+    sendResponse(
+      res,
+      response.results.length === null ? "No Results" : response.results,
+      response.error
+    );
+  });
 }
 
 function getAsset(req, res) {
@@ -56,8 +69,18 @@ function getAsset(req, res) {
   });
 }
 
+function getAssetByID(req, res) {
+  assetDB.getAssetByID(req.params.AssetID, (response) => {
+    sendResponse(
+      res,
+      response.results.length === null ? "No Results" : response.results,
+      response.error
+    );
+  });
+}
+
 function deleteAsset(req, res) {
-  assetDB.deleteAsset(req.params.StyleNumber, (response) => {
+  assetDB.deleteAsset(req.params.AssetID, (response) => {
     sendResponse(
       res,
       response.error === null ? "Record Deleted" : "Something Went Wrong",
@@ -67,7 +90,7 @@ function deleteAsset(req, res) {
 }
 
 function putAsset(req, res) {
-  assetDB.putAsset(req.body.StyleName, req.params.StyleNumber, (response) => {
+  assetDB.putAsset(req.body.StyleName, req.params.AssetID, (response) => {
     sendResponse(
       res,
       response.error === null ? "Record Updated" : "Something Went Wrong",
@@ -109,7 +132,7 @@ function deleteCategory(req, res) {
 }
 
 function putCategory(req, res) {
-  assetDB.putCategory(req.body.Name, req.params.CategoryID, (response) => {
+  assetDB.putCategory(req.body.label, req.params.CategoryID, (response) => {
     sendResponse(
       res,
       response.error === null ? "Record Updated" : "Something Went Wrong",
@@ -136,7 +159,7 @@ function getColor(req, res) {
   assetDB.getColor((response) => {
     sendResponse(
       res,
-      response.results.length === null ? "No Results" : response.results,
+      response.results.length === 0 ? "No Results" : response.results,
       response.error
     );
   });
@@ -167,7 +190,7 @@ function authToken(req, res) {
 
 /* Response function  */
 function sendResponse(res, message, error) {
-  res.status(error !== undefined ? 400 : 200).json({
+  res.status(error !== null ? 400 : 200).json({
     message: message,
     error: error,
   });
