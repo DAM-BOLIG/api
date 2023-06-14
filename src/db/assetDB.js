@@ -7,7 +7,9 @@ module.exports = (InjectedMysqlPool) => {
 
   return {
     createAsset,
+    assetInfo,
     getAsset,
+    getAssetByID,
     deleteAsset,
     putAsset,
     getCategory,
@@ -23,16 +25,23 @@ module.exports = (InjectedMysqlPool) => {
 
 function createAsset(
   StyleName,
-  StyleNumber,
+  Width,
+  Height,
+  Length,
+  Description,
   CategoryID,
   BrandID,
   ColorID,
   Primary_IMG,
-  Secondary_IMG,
-  Optional_IMG,
   cbFunc
 ) {
-  const sql = `Insert INTO asset (StyleName, StyleNumber, CategoryID, BrandID, ColorID, Primary_IMG, Secondary_IMG, Optional_IMG)VALUES('${StyleName}', '${StyleNumber}', '${CategoryID}', '${BrandID}', '${ColorID}', '${Primary_IMG}', '${Secondary_IMG}', '${Optional_IMG}')`;
+  const sql = `Insert INTO asset (StyleName, Width, Height, Length, Description, Created, CategoryID, BrandID, ColorID, Primary_IMG)VALUES('${StyleName}','${Width}','${Height}', '${Length}', '${Description}', CURRENT_DATE, '${CategoryID}', '${BrandID}', '${ColorID}', '${Primary_IMG}')`;
+  Mysqlpool.query(sql, cbFunc);
+}
+
+function assetInfo(cbFunc) {
+  const sql = "CALL asset_info";
+
   Mysqlpool.query(sql, cbFunc);
 }
 
@@ -42,14 +51,20 @@ function getAsset(cbFunc) {
   Mysqlpool.query(sql, cbFunc);
 }
 
-function deleteAsset(StyleNumber, cbFunc) {
-  const sql = "DELETE FROM asset WHERE StyleNumber = " + StyleNumber + "";
+function getAssetByID(AssetID, cbFunc) {
+  const sql = "CALL asset_by_id(" + AssetID + ")";
 
   Mysqlpool.query(sql, cbFunc);
 }
 
-function putAsset(stylename, stylenumber, cbFunc) {
-  const sql = `UPDATE asset SET StyleName = '${stylename}' WHERE StyleNumber = '${stylenumber}'`;
+function deleteAsset(AssetID, cbFunc) {
+  const sql = "DELETE FROM asset WHERE AssetID = " + AssetID + "";
+
+  Mysqlpool.query(sql, cbFunc);
+}
+
+function putAsset(stylename, AssetID, cbFunc) {
+  const sql = `UPDATE asset SET StyleName = '${stylename}' WHERE AssetID = '${AssetID}'`;
   Mysqlpool.query(sql, cbFunc);
 }
 
@@ -72,8 +87,8 @@ function deleteCategory(CategoryID, cbFunc) {
   Mysqlpool.query(sql, cbFunc);
 }
 
-function putCategory(CategoryName, CategoryID, cbFunc) {
-  const sql = `UPDATE category SET Name = '${CategoryName}' WHERE CategoryID = '${CategoryID}'`;
+function putCategory(label, CategoryID, cbFunc) {
+  const sql = `UPDATE category SET label = '${label}' WHERE CategoryID = '${CategoryID}'`;
   Mysqlpool.query(sql, cbFunc);
 }
 
