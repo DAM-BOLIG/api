@@ -165,19 +165,6 @@ function getColor(req, res) {
   });
 }
 
-/* User requests */
-
-/*function createUser(req, res) {
-  assetDB.createUser((response) => {
-    sendResponse(
-      res,
-      response.results.length === null ? "No Results" : response.results,
-      response.error
-    );
-  });
-}
-*/
-
 function authToken(req, res) {
   assetDB.authToken((response) => {
     sendResponse(
