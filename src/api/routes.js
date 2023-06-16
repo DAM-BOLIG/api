@@ -2,31 +2,32 @@
 const path = require("path");
 module.exports = (router, damservice, auth) => {
   /* Asset requests  */
-  router.get("/asset_info", damservice.assetInfo);
+  router.get("/asset_info", auth.autThokenGetReq, damservice.assetInfo);
   router.post("/newasset", auth.authToken, damservice.createAsset);
-  router.get("/allasset", damservice.getAsset);
+  router.get("/allasset", auth.autThokenGetReq, damservice.getAsset);
   router.delete(
     "/deleteasset/:AssetID",
     auth.authTokenAssetID,
     damservice.deleteAsset
   );
+  //Code
   router.put(
     "/updateasset/:AssetID",
     auth.authTokenAssetID,
     damservice.putAsset
   );
-  router.get("/asset/:AssetID", damservice.getAssetByID);
+  router.get("/asset/:AssetID", auth.autThokenGetReq, damservice.getAssetByID);
   /* Category requests  */
-  router.post("/newcategory", damservice.createCategory);
-  router.get("/allcategory", damservice.getCategory);
-  router.delete("/deletecategory/:CategoryID", damservice.deleteCategory);
-  router.put("/updatecategory/:CategoryID", damservice.putCategory);
+  router.post("/newcategory", auth.authTokenNoGateway, damservice.createCategory);
+  router.get("/allcategory", auth.autThokenGetReq, damservice.getCategory);
+  router.delete("/deletecategory/:CategoryID", auth.authTokenNoGateway, damservice.deleteCategory);
+  router.put("/updatecategory/:CategoryID", auth.authTokenNoGateway, damservice.putCategory);
   /*  Brand requests: GET   */
-  router.get("/allbrand", damservice.getBrand);
+  router.get("/allbrand", auth.autThokenGetReq, damservice.getBrand);
   /*  Color requests: GET  */
-  router.get("/allcolor", damservice.getColor);
+  router.get("/allcolor", auth.authTokenNoGateway,damservice.getColor);
   /* User requests: POST */
   //router.post("/newuser", damservice.createUser);
-  router.post("/authtoken", auth.authToken);
+  //router.post("/authtoken", auth.authToken);
   return router;
 };
