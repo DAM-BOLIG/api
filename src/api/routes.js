@@ -10,6 +10,7 @@ module.exports = (router, damservice, auth) => {
     auth.authTokenAssetID,
     damservice.deleteAsset
   );
+  //Code
   router.put(
     "/updateasset/:AssetID",
     auth.authTokenAssetID,
