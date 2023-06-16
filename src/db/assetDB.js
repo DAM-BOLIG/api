@@ -17,6 +17,8 @@ module.exports = (InjectedMysqlPool) => {
     deleteCategory,
     putCategory,
     getBrand,
+    getBrandByID,
+    getBrandIDbyAssetID,
     getColor,
   };
 };
@@ -95,6 +97,18 @@ function putCategory(label, CategoryID, cbFunc) {
 /* Brand requests  */
 function getBrand(cbFunc) {
   const sql = "SELECT * FROM brand ORDER BY BrandID DESC";
+
+  Mysqlpool.query(sql, cbFunc);
+}
+
+function getBrandByID(BrandID, cbFunc) {
+  const sql = `SELECT label FROM brand WHERE BrandID = '${BrandID}'`;
+
+  Mysqlpool.query(sql, cbFunc);
+}
+
+function getBrandIDbyAssetID(AssetID, cbFunc) {
+  const sql = `SELECT BrandID FROM asset WHERE AssetID = '${AssetID}'`;
 
   Mysqlpool.query(sql, cbFunc);
 }
