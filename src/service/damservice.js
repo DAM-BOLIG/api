@@ -102,7 +102,7 @@ function putAsset(req, res) {
 /* Category requests  */
 
 function createCategory(req, res) {
-  assetDB.createCategory(req.body.Name, (response) => {
+  assetDB.createCategory(req.body.label, (response) => {
     sendResponse(
       res,
       response.error === null ? "Succes!!" : "something, went wrong",

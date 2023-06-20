@@ -37,8 +37,21 @@ function createAsset(
   Primary_IMG,
   cbFunc
 ) {
-  const sql = `Insert INTO asset (StyleName, Width, Height, Length, Description, Created, CategoryID, BrandID, ColorID, Primary_IMG)VALUES('${StyleName}','${Width}','${Height}', '${Length}', '${Description}', CURRENT_DATE, '${CategoryID}', '${BrandID}', '${ColorID}', '${Primary_IMG}')`;
-  Mysqlpool.query(sql, cbFunc);
+  const values = [
+    StyleName,
+    Width,
+    Height,
+    Length,
+    Description,
+    //Created,
+    CategoryID,
+    BrandID,
+    ColorID,
+    Primary_IMG,
+  ];
+  const sql =
+    "INSERT INTO asset (StyleName, Width, Height, Length, Description, Created, CategoryID, BrandID, ColorID, Primary_IMG) VALUES (?,?,?,?,?,CURRENT_DATE,?,?,?,?)";
+  Mysqlpool.execute(sql, values, cbFunc);
 }
 
 function assetInfo(cbFunc) {
@@ -54,20 +67,24 @@ function getAsset(cbFunc) {
 }
 
 function getAssetByID(AssetID, cbFunc) {
-  const sql = "CALL asset_by_id(" + AssetID + ")";
+  //const sql = "CALL asset_by_id(" + AssetID + ")";
+  const sql = "CALL asset_by_id(?)";
+  const values = [AssetID];
 
-  Mysqlpool.query(sql, cbFunc);
+  Mysqlpool.execute(sql, values, cbFunc);
 }
 
 function deleteAsset(AssetID, cbFunc) {
-  const sql = "DELETE FROM asset WHERE AssetID = " + AssetID + "";
+  const values = [AssetID];
+  const sql = "DELETE FROM asset WHERE AssetID = ?";
 
-  Mysqlpool.query(sql, cbFunc);
+  Mysqlpool.execute(sql, values, cbFunc);
 }
 
 function putAsset(stylename, AssetID, cbFunc) {
-  const sql = `UPDATE asset SET StyleName = '${stylename}' WHERE AssetID = '${AssetID}'`;
-  Mysqlpool.query(sql, cbFunc);
+  const sql = "UPDATE asset SET StyleName = ? WHERE AssetID = ?";
+  const values = [stylename, AssetID];
+  Mysqlpool.execute(sql, values, cbFunc);
 }
 
 /* Category requests  */
@@ -78,20 +95,23 @@ function getCategory(cbFunc) {
   Mysqlpool.query(sql, cbFunc);
 }
 
-function createCategory(Name, cbFunc) {
-  const sql = `Insert INTO category (Name)VALUES('${Name}')`;
-  Mysqlpool.query(sql, cbFunc);
+function createCategory(label, cbFunc) {
+  const sql = "INSERT INTO category (label) VALUES (?)";
+  const values = [label];
+  Mysqlpool.execute(sql, values, cbFunc);
 }
 
 function deleteCategory(CategoryID, cbFunc) {
-  const sql = "DELETE FROM category WHERE CategoryID = " + CategoryID + "";
+  const sql = "DELETE FROM category WHERE CategoryID = ?";
+  const values = [CategoryID];
 
-  Mysqlpool.query(sql, cbFunc);
+  Mysqlpool.execute(sql, values, cbFunc);
 }
 
 function putCategory(label, CategoryID, cbFunc) {
-  const sql = `UPDATE category SET label = '${label}' WHERE CategoryID = '${CategoryID}'`;
-  Mysqlpool.query(sql, cbFunc);
+  const sql = "UPDATE category SET label = ? WHERE CategoryID = ?";
+  values = [label, CategoryID];
+  Mysqlpool.execute(sql, values, cbFunc);
 }
 
 /* Brand requests  */
@@ -102,15 +122,17 @@ function getBrand(cbFunc) {
 }
 
 function getBrandByID(BrandID, cbFunc) {
-  const sql = `SELECT label FROM brand WHERE BrandID = '${BrandID}'`;
+  const sql = "SELECT label FROM brand WHERE BrandID = ?";
+  const values = [BrandID];
 
-  Mysqlpool.query(sql, cbFunc);
+  Mysqlpool.execute(sql, values, cbFunc);
 }
 
 function getBrandIDbyAssetID(AssetID, cbFunc) {
-  const sql = `SELECT BrandID FROM asset WHERE AssetID = '${AssetID}'`;
+  const sql = "SELECT BrandID FROM asset WHERE AssetID = ?";
+  const values = [AssetID];
 
-  Mysqlpool.query(sql, cbFunc);
+  Mysqlpool.execute(sql, values, cbFunc);
 }
 
 /* Color requests  */
